@@ -58,6 +58,14 @@ class TestPlatformRegistration:
         cls = PlatformRegistry.get("iluvatar")
         assert cls is PlatformIluvatar
 
+    def test_musa_registered(self):
+        from verl.plugin.platform.platform_manager import PlatformRegistry
+        from verl_hardware_plugin.platforms.platform_musa import PlatformMUSA  # noqa: F401
+
+        assert "musa" in PlatformRegistry.registered_names()
+        cls = PlatformRegistry.get("musa")
+        assert cls is PlatformMUSA
+
     def test_xpu_detection_with_env(self):
         from verl.plugin.platform.platform_manager import _detect_platform_name
         from verl_hardware_plugin.platforms.platform_xpu import PlatformXPU  # noqa: F401
@@ -139,6 +147,22 @@ class TestPlatformRegistration:
         with _fresh_registries():
             with mock.patch.dict(os.environ, {"VERL_PLATFORM": "iluvatar"}):
                 assert _detect_platform_name() == "iluvatar"
+
+    def test_musa_detection_with_env(self):
+        from verl.plugin.platform.platform_manager import _detect_platform_name
+        from verl_hardware_plugin.platforms.platform_musa import PlatformMUSA  # noqa: F401
+
+        with _fresh_registries():
+            with mock.patch.dict(os.environ, {"VERL_PLATFORM": "musa"}):
+                assert _detect_platform_name() == "musa"
+
+    def test_musa_device_and_vendor_names(self):
+        from verl_hardware_plugin.platforms.platform_musa import PlatformMUSA
+
+        platform = PlatformMUSA()
+        assert platform.device_name == "musa"
+        assert platform.vendor_name == "moore_threads"
+        assert platform.communication_backend_name() == "mccl"
 
 
 class TestEngineRegistration:
@@ -231,6 +255,32 @@ class TestEngineRegistration:
             EngineRegistry._engines["language_model"]["megatron"][("cuda", "iluvatar")]
             is MegatronIluvatarEngineWithLMHead
         )
+
+    def test_megatron_musa_engine_registered(self):
+        from verl.workers.engine.base import EngineRegistry
+        from verl_hardware_plugin.engines.megatron_musa import MegatronMUSAEngineWithLMHead
+
+        assert (
+            EngineRegistry._engines["language_model"]["megatron"][("musa", "moore_threads")]
+            is MegatronMUSAEngineWithLMHead
+        )
+
+    def test_fsdp_musa_engines_registered(self):
+        from verl.workers.engine.base import EngineRegistry
+        from verl_hardware_plugin.engines.fsdp_musa import (
+            FSDPMUSAEngineWithLMHead,
+            FSDPMUSAEngineWithValueHead,
+        )
+
+        for backend in ("fsdp", "fsdp2"):
+            assert (
+                EngineRegistry._engines["language_model"][backend][("musa", "moore_threads")]
+                is FSDPMUSAEngineWithLMHead
+            )
+            assert (
+                EngineRegistry._engines["value_model"][backend][("musa", "moore_threads")]
+                is FSDPMUSAEngineWithValueHead
+            )
 
     def test_fsdp_enflame_engines_registered(self):
         from verl.workers.engine.base import EngineRegistry

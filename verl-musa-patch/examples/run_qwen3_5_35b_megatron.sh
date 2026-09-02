@@ -182,6 +182,7 @@ ROLLOUT=(
     +actor_rollout_ref.rollout.engine_kwargs.sglang.linear_attn_backend="flashinfer"
     +actor_rollout_ref.rollout.engine_kwargs.sglang.tokenizer_backend="fastokens"
     +actor_rollout_ref.rollout.engine_kwargs.sglang.sampling_backend="flashinfer"
+    +actor_rollout_ref.rollout.engine_kwargs.sglang.attention_backend=fa3
     
     # SGLang DP-attention topology: TP=4, attention DP=4, MoE EP=4.
     # +actor_rollout_ref.rollout.engine_kwargs.sglang.enable_dp_attention=True
