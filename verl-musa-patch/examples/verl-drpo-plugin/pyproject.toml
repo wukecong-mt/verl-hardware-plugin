@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "verl-drpo-plugin"
+version = "0.1.0"
+description = "DRPO and effective-ratio DRPO policy losses for verl 0.9"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+dependencies = [
+    "verl>=0.9.0,<0.10",
+]
+
+[project.entry-points."verl.plugins"]
+drpo = "verl_drpo_plugin"
+
+[tool.setuptools.packages.find]
+include = ["verl_drpo_plugin*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
