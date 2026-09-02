@@ -33,7 +33,7 @@ user_guide_musa/
 | Item | Description |
 |------|-------------|
 | Device type | `musa` |
-| Vendor identifier | `Moore Threads` |
+| Vendor identifier | `moore_threads` |
 | Communication backend | `mccl` |
 | Device visibility env var | `MUSA_VISIBLE_DEVICES` |
 | Ray resource name | `GPU` |
