@@ -33,7 +33,7 @@ user_guide_musa/
 | Item | Description |
 |------|-------------|
 | Device type | `musa` |
-| Vendor identifier | `moore_threads` |
+| Vendor identifier | `Moore Threads` |
 | Communication backend | `mccl` |
 | Device visibility env var | `MUSA_VISIBLE_DEVICES` |
 | Ray resource name | `GPU` |
@@ -41,23 +41,17 @@ user_guide_musa/
 
 ## MUSA Migration Patches
 
-```bash
-export VERL_PLATFORM=musa
-export RAY_EXPERIMENTAL_NOSET_MUSA_VISIBLE_DEVICES=1
-```
-
 MUSA deployments may use two separate compatibility layers:
 
-- The official Megatron code is adapted through the external
-  `megatron-lm-musa-patch`, selected with `MUSA_PATCH_PATH` (usually
-  `/home/megatron-lm-musa-patch` in the release image).
-- VERL and SGLang runtime components may use an internal
-  `verl-musa-patch` overlay supplied by the deployment environment. Set
-  `VERL_MUSA_PATCH` to its path and add it to the workers' `PYTHONPATH`
-  (usually `/home/verl-musa-patch/` in the internal release image). This
-  overlay is not part of the public `verl-hardware-plugin` package.
+- MUSA support for the upstream Megatron/MCore implementation is provided by
+  the external `megatron-lm-musa-patch` compatibility layer. The patch is loaded
+  at runtime from the directory specified by `MUSA_PATCH_PATH` (usually
+  `/home/megatron-lm-musa-patch` in the release image); it adapts the
+  unmodified Megatron code for MUSA execution.
 
-For Megatron/MCore training, add the required external patch directories to
-`PYTHONPATH`. FSDP training does not require `MUSA_PATCH_PATH`; if the internal
-runtime overlay is used, pass `VERL_MUSA_PATCH` to every Ray worker. See the
-[Installation Guide](./install_guidance.md) for the complete setup.
+- MUSA compatibility for VERL and SGLang runtime components is provided by the
+  deployment-specific `verl-musa-patch` compatibility layer. The patch is loaded
+  at runtime from the directory specified by `VERL_MUSA_PATCH` (usually
+  `/home/verl-musa-patch` in the release image) and made available to Ray workers
+  through `PYTHONPATH`; it adapts the VERL and SGLang runtime components for MUSA
+  execution.

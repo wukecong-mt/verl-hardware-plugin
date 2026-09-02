@@ -26,7 +26,7 @@ The platforms and engines in this repository are **reference implementations** �
 | Enflame GCU | GCU | ECCL / FlagCX | ✅ Example (requires vendor support) | [User Guide](docs/user_guide_enflame/README.md) |
 | Huawei NPU | Ascend 910B | HCCL | Built-in (verl core) | [Ascend Tutorial](https://github.com/verl-project/verl/tree/main/docs/ascend_tutorial) |
 | Iluvatar | BI-V150 (CUDA-compatible) | IXCCL | ✅ Supported | [User Guide](docs/user_guide_iluvatar/README.md) |
-| Moore Threads | S5000 (CUDA-compatible) | MCCL | ✅ Supported | [User Guide](docs/user_guide_musa/README.md) |
+| Moore Threads | MUSA (CUDA-compatible) | MCCL | ✅ Supported | [User Guide](docs/user_guide_musa/README.md) |
 
 
 ## Installation
