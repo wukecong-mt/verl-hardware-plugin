@@ -164,6 +164,7 @@ class TestPlatformRegistration:
         assert platform.vendor_name == "moore_threads"
         assert platform.communication_backend_name() == "mccl"
 
+
 class TestEngineRegistration:
     """Verify that engine classes register correctly."""
 
