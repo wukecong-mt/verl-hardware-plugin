@@ -50,11 +50,7 @@ class PlatformMUSA(PlatformBase):
         return _ensure_torch_musa() and torch.musa.is_available()
 
     def is_platform_available(self, use_smi_check: bool = False) -> bool:
-        # The explicit VERL_PLATFORM=musa path is needed on Ray CPU actors,
-        # where torch.musa.is_available() can be false before device binding.
-        if not _ensure_torch_musa():
-            return False
-        return True if use_smi_check else torch.musa.is_available()
+        return _ensure_torch_musa() and torch.musa.is_available()
 
     def current_device(self) -> int:
         return torch.musa.current_device()
@@ -78,7 +74,10 @@ class PlatformMUSA(PlatformBase):
         torch.musa.manual_seed_all(seed)
 
     def set_allocator_settings(self, settings: str) -> None:
-        torch.musa.memory._set_allocator_settings(settings)
+        try:
+            torch.musa.memory._set_allocator_settings(settings)
+        except (AttributeError, RuntimeError):
+            logger.warning("torch.musa does not support _set_allocator_settings")
 
     def empty_cache(self) -> None:
         torch.musa.empty_cache()

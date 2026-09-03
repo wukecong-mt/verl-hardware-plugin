@@ -164,7 +164,6 @@ class TestPlatformRegistration:
         assert platform.vendor_name == "moore_threads"
         assert platform.communication_backend_name() == "mccl"
 
-
 class TestEngineRegistration:
     """Verify that engine classes register correctly."""
 
@@ -258,11 +257,18 @@ class TestEngineRegistration:
 
     def test_megatron_musa_engine_registered(self):
         from verl.workers.engine.base import EngineRegistry
-        from verl_hardware_plugin.engines.megatron_musa import MegatronMUSAEngineWithLMHead
+        from verl_hardware_plugin.engines.megatron_musa import (
+            MegatronMUSAEngineWithLMHead,
+            MegatronMUSAEngineWithValueHead,
+        )
 
         assert (
             EngineRegistry._engines["language_model"]["megatron"][("musa", "moore_threads")]
             is MegatronMUSAEngineWithLMHead
+        )
+        assert (
+            EngineRegistry._engines["value_model"]["megatron"][("musa", "moore_threads")]
+            is MegatronMUSAEngineWithValueHead
         )
 
     def test_fsdp_musa_engines_registered(self):
