@@ -40,8 +40,16 @@ export MODEL_DIR=/ipfs/models/Qwen/Qwen3-0.6B
 
 exec bash "scripts/baseline_grpo_gsm8k.sh" \
     "+ray_kwargs.ray_init.runtime_env.env_vars.VERL_PLATFORM='musa'" \
+    "+ray_kwargs.ray_init.runtime_env.env_vars.VERL_USE_EXTERNAL_MODULES='${VERL_USE_EXTERNAL_MODULES}'" \
     "+ray_kwargs.ray_init.runtime_env.env_vars.VERL_MUSA_PATCH='${VERL_MUSA_PATCH}'" \
     "+ray_kwargs.ray_init.runtime_env.env_vars.PYTHONPATH='${VERL_MUSA_PATCH}:${PYTHONPATH:-}'" \
+    "+ray_kwargs.ray_init.runtime_env.env_vars.RAY_EXPERIMENTAL_NOSET_MUSA_VISIBLE_DEVICES='${RAY_EXPERIMENTAL_NOSET_MUSA_VISIBLE_DEVICES}'" \
+    "+ray_kwargs.ray_init.runtime_env.env_vars.RAY_ACCEL_ENV_VAR_OVERRIDE_ON_ZERO='${RAY_ACCEL_ENV_VAR_OVERRIDE_ON_ZERO}'" \
+    "+ray_kwargs.ray_init.runtime_env.env_vars.MUSA_VISIBLE_DEVICES='${MUSA_VISIBLE_DEVICES}'" \
+    "+ray_kwargs.ray_init.runtime_env.env_vars.MCCL_LIB='${MCCL_LIB}'" \
+    "+ray_kwargs.ray_init.runtime_env.env_vars.LD_LIBRARY_PATH='${LD_LIBRARY_PATH}'" \
+    "+ray_kwargs.ray_init.runtime_env.env_vars.VLLM_PATCH_MUSA_CUSTOM_OPS='${VLLM_PATCH_MUSA_CUSTOM_OPS}'" \
+    "+ray_kwargs.ray_init.runtime_env.env_vars.SGLANG_MUSA_GRAPH_COMPAT='${SGLANG_MUSA_GRAPH_COMPAT}'" \
     trainer.device=musa \
     +actor_rollout_ref.rollout.engine_kwargs.sglang.device=musa \
     +actor_rollout_ref.rollout.engine_kwargs.sglang.attention_backend=fa3 \
