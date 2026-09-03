@@ -142,8 +142,6 @@ def register_all_engines():
         logger.info("Registered engines: fsdp_musa")
     except Exception as e:
         logger.debug("MUSA FSDP engines not registered: %s", e)
-        if os.getenv("VERL_PLATFORM", "").strip().lower() == "musa":
-            raise
 
     try:
         from verl_hardware_plugin.engines import megatron_musa  # noqa: F401
@@ -151,5 +149,3 @@ def register_all_engines():
         logger.info("Registered engines: megatron_musa")
     except Exception as e:
         logger.debug("MUSA Megatron engine not registered: %s", e)
-        if os.getenv("VERL_PLATFORM", "").strip().lower() == "musa":
-            raise

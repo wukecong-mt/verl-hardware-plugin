@@ -86,5 +86,3 @@ def register_all_platforms():
         logger.info("Registered platform: moore_threads (musa)")
     except Exception as e:
         logger.debug("MUSA platform not registered: %s", e)
-        if os.getenv("VERL_PLATFORM", "").strip().lower() == "musa":
-            raise
