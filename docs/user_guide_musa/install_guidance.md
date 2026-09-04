@@ -43,6 +43,10 @@ ls /home
 python3 -c 'import torch; import sglang; print(torch.musa.is_available())'
 ```
 
+A public image is:
+
+`registry.mthreads.com/mcctest/training-suite:v2.1.7.rc3-ut-verify`
+
 ## 2. Install verl and verl-hardware-plugin
 
 ```bash
